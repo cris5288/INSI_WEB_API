@@ -91,14 +91,12 @@ namespace INSI_WEB_API.Controllers
         [Route("Editar")]
         public IActionResult Editar([FromBody] Matricula objeto)
         {
-            //Este es el objeto Matriculas
             Matricula oMatricula = _dbcontext.Matriculas.Find(objeto.IdMatricula);
 
             if (oMatricula == null)
             {
                 return BadRequest("Matricula de Estudiante no encontrada");
             }
-
             try
             {
 
@@ -110,49 +108,8 @@ namespace INSI_WEB_API.Controllers
                 oMatricula.FechaMatricula = objeto.FechaMatricula is null ? oMatricula.FechaMatricula : objeto.FechaMatricula;
                 oMatricula.EstadoMatricula = objeto.EstadoMatricula is null ? oMatricula.EstadoMatricula : objeto.EstadoMatricula;
                 oMatricula.GradoSolicitado = objeto.GradoSolicitado is null ? oMatricula.GradoSolicitado : objeto.GradoSolicitado;
-
-
-                //        //Este el objeto Estudiantes
-                //        Estudiante oEstudiante = _dbcontext.Estudiantes.Find(objeto.IdEstudiante);
-                //if(oEstudiante == null)
-                //{
-                //    return BadRequest("Estudiante no encontrado");
-                //}
-
-                //        oEstudiante.IdEstudiante = objeto2.IdEstudiante is null ? oEstudiante.IdEstudiante : objeto2.IdEstudiante;
-                //        oEstudiante.Nombre = objeto2.Nombre is null ? oEstudiante.Nombre : objeto2.Nombre;
-                //        oEstudiante.Apellido = objeto2.Apellido is null ? oEstudiante.Apellido : objeto2.Apellido;
-                //        oEstudiante.FechaNacimiento = objeto2.FechaNacimiento is null ? oEstudiante.FechaNacimiento : objeto2.FechaNacimiento;
-                //        oEstudiante.LugarNacimiento = objeto2.LugarNacimiento is null ? oEstudiante.LugarNacimiento : objeto2.LugarNacimiento;
-                //        oEstudiante.ZonaRecidencial = objeto2.ZonaRecidencial is null ? oEstudiante.ZonaRecidencial : objeto2.ZonaRecidencial;
-                //        oEstudiante.PartidaNacimiento = objeto2.PartidaNacimiento is null ? oEstudiante.PartidaNacimiento : objeto2.PartidaNacimiento;
-                //        oEstudiante.Edad = objeto2.Edad is null ? oEstudiante.Edad : objeto2.Edad;
-                //        oEstudiante.Genero = objeto2.Genero is null ? oEstudiante.Genero : objeto2.Genero;
-                //        oEstudiante.Direccion = objeto2.Direccion is null ? oEstudiante.Direccion : objeto2.Direccion;
-                //        oEstudiante.Telefono = objeto2.Telefono is null ? oEstudiante.Telefono : objeto2.Telefono;
-                //        oEstudiante.UltimoGradoAprobado = objeto2.UltimoGradoAprobado is null ? oEstudiante.UltimoGradoAprobado : objeto2.UltimoGradoAprobado;
-                //        oEstudiante.EstaRepitiendoGrado = objeto2.EstaRepitiendoGrado is null ? oEstudiante.EstaRepitiendoGrado : objeto2.EstaRepitiendoGrado;
-
-
-
-                //        //Este es el objeto Tutores
-                //Tutores oTutores = _dbcontext.Tutores.Find(objeto.IdTutor);
-                //if(oTutores == null)
-                //{
-                //    return BadRequest("Tutor no encontrado");
-                //}
-
-                //        oTutores.IdTutor = objeto3.IdTutor is null ? oTutores.IdTutor : objeto3.IdTutor;
-                //        oTutores.IdEstudiante = objeto3.IdEstudiante is null ? oTutores.IdEstudiante : objeto3.IdEstudiante;
-                //        oTutores.Nombre = objeto3.Nombre is null ? oTutores.Nombre : objeto3.Nombre;
-                //        oTutores.Apellido = objeto3.Apellido is null ? oTutores.Apellido : objeto3.Apellido;
-                //        oTutores.Direccion = objeto3.Direccion is null ? oTutores.Direccion : objeto3.Direccion;
-                //        oTutores.Telefono = objeto3.Telefono is null ? oTutores.Telefono : objeto3.Telefono;
-                //        oTutores.RelacionConEstudiante = objeto3.RelacionConEstudiante is null ? oTutores.RelacionConEstudiante : objeto3.RelacionConEstudiante;
-
-                _dbcontext.Matriculas.Update(oMatricula);
-                //_dbcontext.Estudiantes.Update(oEstudiante);
-                //_dbcontext.Tutores.Update(oTutores);
+               
+                _dbcontext.Matriculas.Update(oMatricula);              
                 _dbcontext.SaveChanges();
 
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Matricula de Estudiante editada correctamente" });

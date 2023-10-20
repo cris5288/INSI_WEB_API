@@ -20,4 +20,5 @@ public partial class Matricula
     public virtual Estudiante? oEstudiante { get; set; }
 
     public virtual Tutores? oTutores { get; set; }
+   
 }

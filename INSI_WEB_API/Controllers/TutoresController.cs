@@ -14,6 +14,69 @@ namespace INSI_WEB_API.Controllers
         {
             _dbcontext = _context;
         }
+
+
+        [HttpGet]
+        [Route("Lista")]
+
+        public IActionResult Lista()
+        {
+            List<Tutores> lista = new List<Tutores>();
+
+            try
+            {
+                lista = _dbcontext.Tutores.ToList();
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Lista de Tutores", response = lista });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message, response = lista });
+            }
+
+        }
+
+        [HttpGet]
+        [Route("Obtener/{idTutores:int}")]
+        public IActionResult Obtener(int idTutores)
+        {
+            try
+            {
+                Tutores oTutores = _dbcontext.Tutores.Find(idTutores);
+
+                if (oTutores == null)
+                {
+                    return BadRequest("Estudiante no encontrado");
+                }
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Estudiante encontrado", response = oTutores });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("Guardar")]
+
+        public IActionResult Guardar([FromBody] Tutores objeto)
+        {
+            try
+            {
+                _dbcontext.Tutores.Add(objeto);
+                _dbcontext.SaveChanges();
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Tutor Guardado Correctamente" });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message });
+            }
+        }
+
         [HttpPut]
         [Route("Editar")]
         public IActionResult Editar([FromBody] Tutores objeto3)

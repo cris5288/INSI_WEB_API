@@ -96,6 +96,7 @@ namespace INSI_WEB_API.Controllers
             try
             {
                 oEstudiante.IdEstudiante = objeto2.IdEstudiante is null ? oEstudiante.IdEstudiante : objeto2.IdEstudiante;
+                oEstudiante.IdTutor = objeto2.IdTutor is null ? oEstudiante.IdTutor : objeto2.IdTutor;
                 oEstudiante.Nombre = objeto2.Nombre is null ? oEstudiante.Nombre : objeto2.Nombre;
                 oEstudiante.Apellido = objeto2.Apellido is null ? oEstudiante.Apellido : objeto2.Apellido;
                 oEstudiante.FechaNacimiento = objeto2.FechaNacimiento is null ? oEstudiante.FechaNacimiento : objeto2.FechaNacimiento;
@@ -116,7 +117,7 @@ namespace INSI_WEB_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "❌Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
             }
 
         }

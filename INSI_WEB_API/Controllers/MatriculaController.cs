@@ -28,8 +28,9 @@ namespace INSI_WEB_API.Controllers
 
             try
             {
-                lista = _dbcontext.Matriculas.Include(e => e.oEstudiante).ToList();
+                
                 lista = _dbcontext.Matriculas.Include(t => t.oTutores).ToList();
+                lista = _dbcontext.Matriculas.Include(e => e.oEstudiante).ToList();
 
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Lista de Matricula de estudiantes", response = lista });
 
@@ -53,8 +54,9 @@ namespace INSI_WEB_API.Controllers
 
             try
             {
-              oMatricula=_dbcontext.Matriculas.Include(e => e.oEstudiante).Where(m => m.IdMatricula == idMatricula).FirstOrDefault();
+              
               oMatricula=_dbcontext.Matriculas.Include(t => t.oTutores).Where(m => m.IdMatricula == idMatricula).FirstOrDefault();
+                oMatricula = _dbcontext.Matriculas.Include(e => e.oEstudiante).Where(m => m.IdMatricula == idMatricula).FirstOrDefault();
 
 
 
@@ -133,12 +135,12 @@ namespace INSI_WEB_API.Controllers
             try
             {
                 oMatricula = _dbcontext.Matriculas
-                    .Include(e => e.oEstudiante)
                     .Include(t => t.oTutores)
+                    .Include(e => e.oEstudiante)
                     .SingleOrDefault(m => m.IdMatricula == idMatricula);
 
                 _dbcontext.RemoveRange(oMatricula.oTutores);
-                _dbcontext.Remove(oMatricula.oEstudiante);
+                _dbcontext.Remove(oMatricula.oEstudiante) ;
                 _dbcontext.Remove(oMatricula);
                 _dbcontext.SaveChanges();
 

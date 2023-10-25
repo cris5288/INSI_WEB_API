@@ -30,16 +30,15 @@ public partial class BdInsiContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    { 
+    {
 
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Estudiante>(entity =>
         {
-            entity.HasKey(e => e.IdEstudiante).HasName("PK__Estudian__7ED3967890939AB9");
+            entity.HasKey(e => e.IdEstudiante).HasName("PK__Estudian__7ED3967842B32E84");
 
             entity.ToTable(tb =>
                 {
@@ -69,6 +68,7 @@ public partial class BdInsiContext : DbContext
             entity.Property(e => e.Genero)
                 .HasMaxLength(10)
                 .IsUnicode(false);
+            entity.Property(e => e.IdTutor).HasColumnName("ID_tutor");
             entity.Property(e => e.LugarNacimiento)
                 .HasMaxLength(30)
                 .IsUnicode(false)
@@ -91,6 +91,11 @@ public partial class BdInsiContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("Zona_Recidencial");
+
+            entity.HasOne(d => d.oTutores).WithMany(p => p.Estudiantes)
+                .HasForeignKey(d => d.IdTutor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Estudiant__ID_tu__467D75B8");
         });
 
         modelBuilder.Entity<Historial>(entity =>
@@ -143,7 +148,7 @@ public partial class BdInsiContext : DbContext
 
         modelBuilder.Entity<Matricula>(entity =>
         {
-            entity.HasKey(e => e.IdMatricula).HasName("PK__Matricul__1B102093C30472A5");
+            entity.HasKey(e => e.IdMatricula).HasName("PK__Matricul__1B1020939BF402CF");
 
             entity.ToTable(tb =>
                 {
@@ -171,16 +176,18 @@ public partial class BdInsiContext : DbContext
 
             entity.HasOne(d => d.oEstudiante).WithMany(p => p.Matriculas)
                 .HasForeignKey(d => d.IdEstudiante)
-                .HasConstraintName("FK__Matricula__ID_es__5CD6CB2B");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Matricula__ID_es__4959E263");
 
             entity.HasOne(d => d.oTutores).WithMany(p => p.Matriculas)
                 .HasForeignKey(d => d.IdTutor)
-                .HasConstraintName("FK__Matricula__ID_tu__5DCAEF64");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Matricula__ID_tu__4A4E069C");
         });
 
         modelBuilder.Entity<Tutores>(entity =>
         {
-            entity.HasKey(e => e.IdTutor).HasName("PK__Tutores__E6D3CB5217580288");
+            entity.HasKey(e => e.IdTutor).HasName("PK__Tutores__E6D3CB52B82C6620");
 
             entity.ToTable(tb =>
                 {
@@ -199,7 +206,6 @@ public partial class BdInsiContext : DbContext
             entity.Property(e => e.Direccion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.IdEstudiante).HasColumnName("ID_estudiante");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -210,25 +216,24 @@ public partial class BdInsiContext : DbContext
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.oEstudiante).WithMany(p => p.Tutores)
-                .HasForeignKey(d => d.IdEstudiante)
-                .HasConstraintName("FK__Tutores__ID_estu__59FA5E80");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Usuario");
+            entity.HasKey(e => e.UsuarioId).HasName("PK__Usuario__77101CFDA0670C81");
 
+            entity.ToTable("Usuario");
+
+            entity.Property(e => e.UsuarioId).HasColumnName("Usuario_id");
+            entity.Property(e => e.Contraseña)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.ContraseñaEncriptada)
                 .HasMaxLength(255)
                 .HasColumnName("Contraseña_ENCRIPTADA");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.UsuarioId).HasColumnName("Usuario_id");
         });
 
         OnModelCreatingPartial(modelBuilder);

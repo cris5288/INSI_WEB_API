@@ -47,10 +47,10 @@ namespace INSI_WEB_API.Controllers
 
                 if (oTutores == null)
                 {
-                    return BadRequest("Estudiante no encontrado");
+                    return BadRequest("Tutor no encontrado");
                 }
 
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Estudiante encontrado", response = oTutores });
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Tutor encontrado", response = oTutores });
             }
             catch (Exception ex)
             {
@@ -91,7 +91,6 @@ namespace INSI_WEB_API.Controllers
             try
             {  
                 oTutores.IdTutor = objeto3.IdTutor is null ? oTutores.IdTutor : objeto3.IdTutor;
-                oTutores.IdEstudiante = objeto3.IdEstudiante is null ? oTutores.IdEstudiante : objeto3.IdEstudiante;
                 oTutores.Nombre = objeto3.Nombre is null ? oTutores.Nombre : objeto3.Nombre;
                 oTutores.Apellido = objeto3.Apellido is null ? oTutores.Apellido : objeto3.Apellido;
                 oTutores.Direccion = objeto3.Direccion is null ? oTutores.Direccion : objeto3.Direccion;
@@ -108,6 +107,29 @@ namespace INSI_WEB_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
             }
 
+        }
+
+        [HttpDelete]
+        [Route("Eliminar/{idTutores:int}")]
+        public IActionResult Eliminar(int idTutores)
+        {
+            Tutores oTutores = _dbcontext.Tutores.Find(idTutores);
+            if (oTutores == null)
+            {
+                return BadRequest("Tutor no encontrado");
+            }
+
+            try
+            {
+                _dbcontext.Tutores.Remove(oTutores);
+                _dbcontext.SaveChanges();
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Tutor eliminado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message });
+            }
         }
     }
 }

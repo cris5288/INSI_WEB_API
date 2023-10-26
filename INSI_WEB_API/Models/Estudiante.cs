@@ -6,6 +6,7 @@ namespace INSI_WEB_API.Models;
 
 public partial class Estudiante
 {
+
     public int ?IdEstudiante { get; set; }
     
     public int? IdTutor { get; set; }

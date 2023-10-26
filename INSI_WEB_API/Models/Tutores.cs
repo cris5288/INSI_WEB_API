@@ -6,6 +6,7 @@ namespace INSI_WEB_API.Models;
 
 public partial class Tutores
 {
+    [JsonIgnore]
     public int ?IdTutor { get; set; }
 
     public string? Nombre { get; set; } = null!;

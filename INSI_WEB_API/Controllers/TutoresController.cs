@@ -73,7 +73,7 @@ namespace INSI_WEB_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message });
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "❌ Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
             }
         }
 
@@ -86,7 +86,7 @@ namespace INSI_WEB_API.Controllers
 
             if (oTutores == null)
             {
-                return BadRequest("Tutor  no encontrado");
+                return BadRequest("Tutor no encontrado");
             }
             try
             {  
@@ -104,7 +104,7 @@ namespace INSI_WEB_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "❌ Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
             }
 
         }

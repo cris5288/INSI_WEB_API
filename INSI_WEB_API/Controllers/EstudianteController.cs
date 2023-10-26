@@ -75,7 +75,7 @@ namespace INSI_WEB_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message });
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "❌ Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
             }
         }
 
@@ -117,7 +117,7 @@ namespace INSI_WEB_API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "❌Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "❌ Los datos no son válidos ¡Por favor revise que los datos sean correctos!" });
             }
 
         }
